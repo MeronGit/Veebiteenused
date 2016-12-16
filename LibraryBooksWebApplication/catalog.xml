@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<catalog xmlns="urn:oasis:names:tc:entity:xmlns:xml:catalog" prefer="system">
+    <system systemId="file:/D:/Program%20Files/Dropbox/IA-kast/5.semester/Veebiteenused/Projekt/MinuProjekt/LibraryService.wsdl" uri="src/conf/xml-resources/web-services/LibraryWebService/wsdl/LibraryService.wsdl"/>
+</catalog>

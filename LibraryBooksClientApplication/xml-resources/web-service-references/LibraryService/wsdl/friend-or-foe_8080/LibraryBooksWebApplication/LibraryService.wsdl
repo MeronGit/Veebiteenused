@@ -1,0 +1,292 @@
+<?xml version='1.0' encoding='UTF-8'?><!-- Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown. --><wsdl:definitions xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.ttu.ee/idu0075/2015/ws/library" targetNamespace="http://www.ttu.ee/idu0075/2015/ws/library">
+	<wsdl:types>
+		<xs:schema targetNamespace="http://www.ttu.ee/idu0075/2015/ws/library" elementFormDefault="qualified">
+			<xs:complexType name="bookType">
+				<xs:sequence>
+					<xs:element name="id" type="xs:integer"/>
+					<xs:element name="bookName" type="xs:string"/>
+					<xs:element name="author" type="xs:string"/>
+					<xs:element name="year">
+					  <xs:simpleType>
+						<xs:restriction base="xs:integer">
+						  <xs:minInclusive value="0"/>
+						  <xs:maxInclusive value="2016"/>
+						</xs:restriction>
+					  </xs:simpleType>
+					</xs:element> 
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="libraryBookType">
+				<xs:sequence>
+					<xs:element name="book" type="tns:bookType"/>
+					<xs:element name="libraryId" type="xs:integer"/> <!-- library id on the book (stamp) -->
+					<xs:element name="libraryName" type="xs:string"/> <!-- library name on the book (stamp)-->
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="listOfLibraryBooksType">
+				<xs:sequence>
+					<xs:element minOccurs="0" maxOccurs="unbounded" name="libraryBooks" type="tns:libraryBookType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:complexType name="libraryType">
+				<xs:sequence>
+					<xs:element name="libraryId" type="xs:integer"/>
+					<xs:element name="libraryName" type="xs:string"/>
+					<xs:element name="libraryAddress" type="xs:string"/>
+					<xs:element name="listOfLibraryBooks" type="tns:listOfLibraryBooksType"/>
+				</xs:sequence>
+			</xs:complexType>
+			<xs:element name="getBookRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/> <!--- token here!-->
+						<xs:element name="id" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getBookResponse" type="tns:bookType"/>
+			<xs:element name="addBookRequest">
+				<xs:complexType>
+					<xs:sequence>
+					<xs:element name="token" type="xs:string"/>
+					<xs:element name="requestId" type="xs:integer"/>
+					<xs:element name="name" type="xs:string"/>
+					<xs:element name="author" type="xs:string"/>
+					<xs:element name="year">
+					  <xs:simpleType>
+						<xs:restriction base="xs:integer">
+						  <xs:minInclusive value="0"/>
+						  <xs:maxInclusive value="2016"/>
+						</xs:restriction>
+					  </xs:simpleType>
+					</xs:element> 
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addBookResponse" type="tns:bookType"/>
+			<xs:element name="getBookListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getBookListResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="book" type="tns:bookType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getLibraryRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="libraryId" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getLibraryResponse" type="tns:libraryType"/>
+			<xs:element name="addLibraryRequest">
+				<xs:complexType>
+					<xs:sequence>
+					<xs:element name="token" type="xs:string"/>
+					<xs:element name="requestId" type="xs:integer"/>
+					<xs:element name="libraryName" type="xs:string"/>
+					<xs:element name="libraryAddress" type="xs:string"/>
+					<xs:element name="listOfLibraryBooks" type="tns:listOfLibraryBooksType"/> <!--optional-->
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addLibraryResponse" type="tns:libraryType"/>
+			<xs:element name="getListOfLibrariesRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getListOfLibrariesResponse">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element minOccurs="0" maxOccurs="unbounded" name="library" type="tns:libraryType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getLibraryBooksListRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="libraryId" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="getLibraryBooksListResponse" type="tns:listOfLibraryBooksType"/>
+			<xs:element name="addBookToLibraryRequest">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="token" type="xs:string"/>
+						<xs:element name="requestId" type="xs:integer"/>
+						<xs:element name="libraryId" type="xs:integer"/>
+						<xs:element name="bookId" type="xs:integer"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="addBookToLibraryResponse" type="tns:libraryBookType"/>
+		</xs:schema>
+	</wsdl:types>
+	<wsdl:message name="getBookMessageRequest">
+		<wsdl:part name="parameter" element="tns:getBookRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getBookMessageResponse">
+		<wsdl:part name="parameter" element="tns:getBookResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addBookMessageRequest">
+		<wsdl:part name="parameter" element="tns:addBookRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addBookMessageResponse">
+		<wsdl:part name="parameter" element="tns:addBookResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getBookListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getBookListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getBookListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getBookListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getLibraryMessageRequest">
+		<wsdl:part name="parameter" element="tns:getLibraryRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getLibraryMessageResponse">
+		<wsdl:part name="parameter" element="tns:getLibraryResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addLibraryMessageRequest">
+		<wsdl:part name="parameter" element="tns:addLibraryRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addLibraryMessageResponse">
+		<wsdl:part name="parameter" element="tns:addLibraryResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getListOfLibrariesMessageRequest">
+		<wsdl:part name="parameter" element="tns:getListOfLibrariesRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getListOfLibrariesMessageResponse">
+		<wsdl:part name="parameter" element="tns:getListOfLibrariesResponse"/>
+	</wsdl:message>
+	<wsdl:message name="getLibraryBooksListMessageRequest">
+		<wsdl:part name="parameter" element="tns:getLibraryBooksListRequest"/>
+	</wsdl:message>
+	<wsdl:message name="getLibraryBooksListMessageResponse">
+		<wsdl:part name="parameter" element="tns:getLibraryBooksListResponse"/>
+	</wsdl:message>
+	<wsdl:message name="addBookToLibraryMessageRequest">
+		<wsdl:part name="parameter" element="tns:addBookToLibraryRequest"/>
+	</wsdl:message>
+	<wsdl:message name="addBookToLibraryMessageResponse">
+		<wsdl:part name="parameter" element="tns:addBookToLibraryResponse"/>
+	</wsdl:message>
+	<wsdl:portType name="LibraryPortType">
+		<wsdl:operation name="getBook">
+			<wsdl:input message="tns:getBookMessageRequest"/>
+			<wsdl:output message="tns:getBookMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addBook">
+			<wsdl:input message="tns:addBookMessageRequest"/>
+			<wsdl:output message="tns:addBookMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getBookList">
+			<wsdl:input message="tns:getBookListMessageRequest"/>
+			<wsdl:output message="tns:getBookListMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getLibrary">
+			<wsdl:input message="tns:getLibraryMessageRequest"/>
+			<wsdl:output message="tns:getLibraryMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addLibrary">
+			<wsdl:input message="tns:addLibraryMessageRequest"/>
+			<wsdl:output message="tns:addLibraryMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getListOfLibraries">
+			<wsdl:input message="tns:getListOfLibrariesMessageRequest"/>
+			<wsdl:output message="tns:getListOfLibrariesMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="addBookToLibrary">
+			<wsdl:input message="tns:addBookToLibraryMessageRequest"/>
+			<wsdl:output message="tns:addBookToLibraryMessageResponse"/>
+		</wsdl:operation>
+		<wsdl:operation name="getLibraryBooksList">
+			<wsdl:input message="tns:getLibraryBooksListMessageRequest"/>
+			<wsdl:output message="tns:getLibraryBooksListMessageResponse"/>
+		</wsdl:operation>
+	</wsdl:portType>
+	<wsdl:binding name="LibraryBinding" type="tns:LibraryPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<wsdl:operation name="getBook"> 
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addBook">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getBookList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		<wsdl:operation name="getLibrary">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addLibrary">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="getListOfLibraries">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>	
+		<wsdl:operation name="getLibraryBooksList">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+		<wsdl:operation name="addBookToLibrary">
+			<wsdl:input>
+				<soap:body use="literal"/>
+			</wsdl:input>
+			<wsdl:output>
+				<soap:body use="literal"/>
+			</wsdl:output>
+		</wsdl:operation>
+	</wsdl:binding>
+	<wsdl:service name="LibraryService">
+		<wsdl:port name="LibraryPort" binding="tns:LibraryBinding">
+			<soap:address location="http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService"/>
+		</wsdl:port>
+	</wsdl:service>
+</wsdl:definitions>
