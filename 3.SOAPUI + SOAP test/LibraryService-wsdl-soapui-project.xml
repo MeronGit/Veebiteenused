@@ -1,0 +1,462 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<con:soapui-project id="0efb5384-bcd3-41c1-a5a1-fcc4c10145c4" activeEnvironment="Default" name="LibraryService?wsdl" soapui-version="5.2.1" abortOnError="false" runType="SEQUENTIAL" xmlns:con="http://eviware.com/soapui/config"><con:settings/><con:interface xsi:type="con:WsdlInterface" id="1efe65b3-a3bb-4f76-8753-fc4536ce33e5" wsaVersion="NONE" name="LibraryBinding" type="wsdl" bindingName="{http://www.ttu.ee/idu0075/2015/ws/library}LibraryBinding" soapVersion="1_1" anonymous="optional" definition="http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService?wsdl" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:settings/><con:definitionCache type="TEXT" rootPart="http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService?wsdl"><con:part><con:url>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService?wsdl</con:url><con:content><![CDATA[<!--Published by JAX-WS RI (http://jax-ws.java.net). RI's version is Metro/2.3.2-b608 (trunk-7979; 2015-01-21T12:50:19+0000) JAXWS-RI/2.2.11-b150120.1832 JAXWS-API/2.2.12 JAXB-RI/2.2.12-b141219.1637 JAXB-API/2.2.13-b141020.1521 svn-revision#unknown.-->
+<wsdl:definitions targetNamespace="http://www.ttu.ee/idu0075/2015/ws/library" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://www.ttu.ee/idu0075/2015/ws/library">
+  <wsdl:types>
+    <xs:schema targetNamespace="http://www.ttu.ee/idu0075/2015/ws/library" elementFormDefault="qualified">
+      <xs:complexType name="bookType">
+        <xs:sequence>
+          <xs:element name="id" type="xs:integer"/>
+          <xs:element name="bookName" type="xs:string"/>
+          <xs:element name="author" type="xs:string"/>
+          <xs:element name="year">
+            <xs:simpleType>
+              <xs:restriction base="xs:integer">
+                <xs:minInclusive value="0"/>
+                <xs:maxInclusive value="2016"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:element>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="libraryBookType">
+        <xs:sequence>
+          <xs:element name="book" type="tns:bookType"/>
+          <xs:element name="libraryId" type="xs:integer"/>
+          <!--library id on the book (stamp)-->
+          <xs:element name="libraryName" type="xs:string"/>
+          <!--library name on the book (stamp)-->
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="listOfLibraryBooksType">
+        <xs:sequence>
+          <xs:element minOccurs="0" maxOccurs="unbounded" name="libraryBooks" type="tns:libraryBookType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:complexType name="libraryType">
+        <xs:sequence>
+          <xs:element name="libraryId" type="xs:integer"/>
+          <xs:element name="libraryName" type="xs:string"/>
+          <xs:element name="libraryAddress" type="xs:string"/>
+          <xs:element name="listOfLibraryBooks" type="tns:listOfLibraryBooksType"/>
+        </xs:sequence>
+      </xs:complexType>
+      <xs:element name="getBookRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <!--- token here!-->
+            <xs:element name="id" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getBookResponse" type="tns:bookType"/>
+      <xs:element name="addBookRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="requestId" type="xs:integer"/>
+            <xs:element name="name" type="xs:string"/>
+            <xs:element name="author" type="xs:string"/>
+            <xs:element name="year">
+              <xs:simpleType>
+                <xs:restriction base="xs:integer">
+                  <xs:minInclusive value="0"/>
+                  <xs:maxInclusive value="2016"/>
+                </xs:restriction>
+              </xs:simpleType>
+            </xs:element>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addBookResponse" type="tns:bookType"/>
+      <xs:element name="getBookListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getBookListResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="book" type="tns:bookType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getLibraryRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="libraryId" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getLibraryResponse" type="tns:libraryType"/>
+      <xs:element name="addLibraryRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="requestId" type="xs:integer"/>
+            <xs:element name="libraryName" type="xs:string"/>
+            <xs:element name="libraryAddress" type="xs:string"/>
+            <xs:element name="listOfLibraryBooks" type="tns:listOfLibraryBooksType"/>
+            <!--optional-->
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addLibraryResponse" type="tns:libraryType"/>
+      <xs:element name="getListOfLibrariesRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getListOfLibrariesResponse">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element minOccurs="0" maxOccurs="unbounded" name="library" type="tns:libraryType"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getLibraryBooksListRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="libraryId" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="getLibraryBooksListResponse" type="tns:listOfLibraryBooksType"/>
+      <xs:element name="addBookToLibraryRequest">
+        <xs:complexType>
+          <xs:sequence>
+            <xs:element name="token" type="xs:string"/>
+            <xs:element name="requestId" type="xs:integer"/>
+            <xs:element name="libraryId" type="xs:integer"/>
+            <xs:element name="bookId" type="xs:integer"/>
+          </xs:sequence>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="addBookToLibraryResponse" type="tns:libraryBookType"/>
+    </xs:schema>
+  </wsdl:types>
+  <wsdl:message name="getBookMessageRequest">
+    <wsdl:part name="parameter" element="tns:getBookRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getBookMessageResponse">
+    <wsdl:part name="parameter" element="tns:getBookResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addBookMessageRequest">
+    <wsdl:part name="parameter" element="tns:addBookRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addBookMessageResponse">
+    <wsdl:part name="parameter" element="tns:addBookResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getBookListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getBookListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getBookListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getBookListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getLibraryMessageRequest">
+    <wsdl:part name="parameter" element="tns:getLibraryRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getLibraryMessageResponse">
+    <wsdl:part name="parameter" element="tns:getLibraryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addLibraryMessageRequest">
+    <wsdl:part name="parameter" element="tns:addLibraryRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addLibraryMessageResponse">
+    <wsdl:part name="parameter" element="tns:addLibraryResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getListOfLibrariesMessageRequest">
+    <wsdl:part name="parameter" element="tns:getListOfLibrariesRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getListOfLibrariesMessageResponse">
+    <wsdl:part name="parameter" element="tns:getListOfLibrariesResponse"/>
+  </wsdl:message>
+  <wsdl:message name="getLibraryBooksListMessageRequest">
+    <wsdl:part name="parameter" element="tns:getLibraryBooksListRequest"/>
+  </wsdl:message>
+  <wsdl:message name="getLibraryBooksListMessageResponse">
+    <wsdl:part name="parameter" element="tns:getLibraryBooksListResponse"/>
+  </wsdl:message>
+  <wsdl:message name="addBookToLibraryMessageRequest">
+    <wsdl:part name="parameter" element="tns:addBookToLibraryRequest"/>
+  </wsdl:message>
+  <wsdl:message name="addBookToLibraryMessageResponse">
+    <wsdl:part name="parameter" element="tns:addBookToLibraryResponse"/>
+  </wsdl:message>
+  <wsdl:portType name="LibraryPortType">
+    <wsdl:operation name="getBook">
+      <wsdl:input message="tns:getBookMessageRequest"/>
+      <wsdl:output message="tns:getBookMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addBook">
+      <wsdl:input message="tns:addBookMessageRequest"/>
+      <wsdl:output message="tns:addBookMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getBookList">
+      <wsdl:input message="tns:getBookListMessageRequest"/>
+      <wsdl:output message="tns:getBookListMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getLibrary">
+      <wsdl:input message="tns:getLibraryMessageRequest"/>
+      <wsdl:output message="tns:getLibraryMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addLibrary">
+      <wsdl:input message="tns:addLibraryMessageRequest"/>
+      <wsdl:output message="tns:addLibraryMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getListOfLibraries">
+      <wsdl:input message="tns:getListOfLibrariesMessageRequest"/>
+      <wsdl:output message="tns:getListOfLibrariesMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="addBookToLibrary">
+      <wsdl:input message="tns:addBookToLibraryMessageRequest"/>
+      <wsdl:output message="tns:addBookToLibraryMessageResponse"/>
+    </wsdl:operation>
+    <wsdl:operation name="getLibraryBooksList">
+      <wsdl:input message="tns:getLibraryBooksListMessageRequest"/>
+      <wsdl:output message="tns:getLibraryBooksListMessageResponse"/>
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="LibraryBinding" type="tns:LibraryPortType">
+    <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getBook">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addBook">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getBookList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLibrary">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addLibrary">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getListOfLibraries">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="getLibraryBooksList">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="addBookToLibrary">
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="LibraryService">
+    <wsdl:port name="LibraryPort" binding="tns:LibraryBinding">
+      <soap:address location="http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService"/>
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>]]></con:content><con:type>http://schemas.xmlsoap.org/wsdl/</con:type></con:part></con:definitionCache><con:endpoints><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint></con:endpoints><con:operation id="aadc1c5e-fc45-4768-ba29-37bf82994580" isOneWay="false" action="" name="addBook" bindingOperationName="addBook" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="2a4b9047-3187-4681-af38-1ea883c9aefb" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:addBookRequest>\r
+         <lib:token>sal</lib:token>\r
+         <lib:requestId>2</lib:requestId>\r
+         <lib:name>Kuritöö ja karistus</lib:name>\r
+         <lib:author>Dostojevski</lib:author>\r
+         <lib:year>1899</lib:year>\r
+      </lib:addBookRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/addBookRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="17a52000-afef-45c0-893d-d38f0370adcd" isOneWay="false" action="" name="addBookToLibrary" bindingOperationName="addBookToLibrary" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="920be08f-791a-44eb-8790-eb5a62da76e4" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:addBookToLibraryRequest>\r
+         <lib:token>sal</lib:token>\r
+         <lib:requestId>1</lib:requestId>\r
+         <lib:libraryId>1</lib:libraryId>\r
+         <lib:bookId>1</lib:bookId>\r
+      </lib:addBookToLibraryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/addBookToLibraryRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="69cdc867-ed90-4ea6-a66a-5c3f43e8d033" isOneWay="false" action="" name="addLibrary" bindingOperationName="addLibrary" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="41fbfe95-b36c-43d9-bfd7-2f6cd39be587" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:addLibraryRequest>\r
+         <lib:token>sal</lib:token>\r
+         <lib:requestId>1</lib:requestId>\r
+         <lib:libraryName>TTU raamatukogu</lib:libraryName>\r
+         <lib:libraryAddress>Akadeemia tee</lib:libraryAddress>\r
+         <lib:listOfLibraryBooks>\r
+            <!--Zero or more repetitions:-->\r
+            <lib:libraryBooks>\r
+               <lib:book>\r
+                  <lib:id>?</lib:id>\r
+                  <lib:bookName>?</lib:bookName>\r
+                  <lib:author>?</lib:author>\r
+                  <lib:year>?</lib:year>\r
+               </lib:book>\r
+               <lib:libraryId>?</lib:libraryId>\r
+               <lib:libraryName>?</lib:libraryName>\r
+            </lib:libraryBooks>\r
+         </lib:listOfLibraryBooks>\r
+      </lib:addLibraryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/addLibraryRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="e3cb38b6-42c5-4356-951e-61321a5c4c1a" isOneWay="false" action="" name="getBook" bindingOperationName="getBook" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="02c24c67-ab4b-424d-b3b6-54511c5c7b66" name="Request 1"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:getBookRequest>\r
+         <lib:token>sal</lib:token>\r
+         <lib:id>1</lib:id>\r
+      </lib:getBookRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/getBookRequest"/><con:wsrmConfig version="1.2"/></con:call></con:operation><con:operation id="173c02d8-0816-4b9e-9a8a-39cdb6eab1a3" isOneWay="false" action="" name="getBookList" bindingOperationName="getBookList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="62fbb260-8186-46fd-ade1-f084d56864da" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:getBookListRequest>\r
+         <lib:token>?</lib:token>\r
+      </lib:getBookListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/getBookListRequest"/></con:call></con:operation><con:operation id="da43bc30-6616-49ed-99a3-41a40f7a90c2" isOneWay="false" action="" name="getLibrary" bindingOperationName="getLibrary" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="2f1d4dd0-e322-4ca1-94ff-c81e7c2cb57d" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:getLibraryRequest>\r
+         <lib:token>?</lib:token>\r
+         <lib:libraryId>?</lib:libraryId>\r
+      </lib:getLibraryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/getLibraryRequest"/></con:call></con:operation><con:operation id="555fb406-1936-4e22-be76-0afb97056c95" isOneWay="false" action="" name="getLibraryBooksList" bindingOperationName="getLibraryBooksList" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="9f046c86-a280-49ee-b944-b983dce78979" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:getLibraryBooksListRequest>\r
+         <lib:token>?</lib:token>\r
+         <lib:libraryId>?</lib:libraryId>\r
+      </lib:getLibraryBooksListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/getLibraryBooksListRequest"/></con:call></con:operation><con:operation id="50bae4ff-09b6-451f-b411-f520ae108bc9" isOneWay="false" action="" name="getListOfLibraries" bindingOperationName="getListOfLibraries" type="Request-Response" inputName="" receivesAttachments="false" sendsAttachments="false" anonymous="optional"><con:settings/><con:call id="6e92716e-462e-4ddc-b24c-d917080045e5" name="Request 1"><con:settings/><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:getListOfLibrariesRequest>\r
+         <lib:token>?</lib:token>\r
+      </lib:getListOfLibrariesRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:wsaConfig mustUnderstand="NONE" version="200508" action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/getListOfLibrariesRequest"/></con:call></con:operation></con:interface><con:testSuite id="f470436e-209e-4700-bd1b-44ae757a5931" name="LibraryBinding TestSuite"><con:settings/><con:runType>SEQUENTIAL</con:runType><con:testCase id="fe56f5e3-d583-4830-90ee-be108eb8c3c2" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addBook TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="5d27da07-8a21-4abb-b480-0cba02f76866" name="addBook"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>LibraryBinding</con:interface><con:operation>addBook</con:operation><con:request name="addBook" id="489092cd-d5a8-4c56-b1ab-1738391ed56a"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:addBookRequest>\r
+         <lib:token>sal</lib:token>\r
+         <lib:requestId>2</lib:requestId>\r
+         <lib:name>Kuritöö ja karistus</lib:name>\r
+         <lib:author>Dostojevski</lib:author>\r
+         <lib:year>1899</lib:year>\r
+      </lib:addBookRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="484e5284-1dfb-4b40-9a0b-8a9379d87562" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="cc262a3a-2886-49cc-b65f-44a4b58f526d" name="Contains"><con:configuration><token>2</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/addBookRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="0a3805f0-272d-410c-9193-8b76096f25af" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addBookToLibrary TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="a2f136fd-cca6-4e36-a186-c1aca37dff17" name="addBookToLibrary"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>LibraryBinding</con:interface><con:operation>addBookToLibrary</con:operation><con:request name="addBookToLibrary" id="b4322dfd-8eb5-4735-87a4-bf6f8c541029"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:addBookToLibraryRequest>\r
+         <lib:token>sal</lib:token>\r
+         <lib:requestId>1</lib:requestId>\r
+         <lib:libraryId>2</lib:libraryId>\r
+         <lib:bookId>2</lib:bookId>\r
+      </lib:addBookToLibraryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="4547a154-453e-4284-82bd-65a6eb7b108b" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="79cbffb0-891a-484f-993a-726d572345ba" name="Contains"><con:configuration><token>Mustamäe raamatukogu</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/addBookToLibraryRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="e443a798-90e2-46e0-8368-6eb1ad5d83b1" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="addLibrary TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="cc16df1c-1d3d-4275-a1fe-622e625497d0" name="addLibrary"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>LibraryBinding</con:interface><con:operation>addLibrary</con:operation><con:request name="addLibrary" id="6f4e1c69-5129-4b4e-8564-c6599f38b33d"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:addLibraryRequest>\r
+         <lib:token>sal</lib:token>\r
+         <lib:requestId>2</lib:requestId>\r
+         <lib:libraryName>Mustamäe raamatukogu</lib:libraryName>\r
+         <lib:libraryAddress>Akateemia tee</lib:libraryAddress>\r
+         <lib:listOfLibraryBooks>\r
+            <!--Zero or more repetitions:-->\r
+            <lib:libraryBooks>\r
+               <lib:book>\r
+                  <lib:id>?</lib:id>\r
+                  <lib:bookName>?</lib:bookName>\r
+                  <lib:author>?</lib:author>\r
+                  <lib:year>?</lib:year>\r
+               </lib:book>\r
+               <lib:libraryId>?</lib:libraryId>\r
+               <lib:libraryName>?</lib:libraryName>\r
+            </lib:libraryBooks>\r
+         </lib:listOfLibraryBooks>\r
+      </lib:addLibraryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Simple Contains" id="69b11a45-c02c-4b57-b3c7-bf091d4cf365" name="Contains"><con:configuration><token>2</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Schema Compliance" id="7794d1f5-9873-4bcb-8bfa-816029ce5207" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/addLibraryRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="71b0e874-72a5-448b-b7fe-0c3873f303b0" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getBook TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="36aa3506-cde0-4c72-b46a-8b2349c7fb35" name="getBook"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>LibraryBinding</con:interface><con:operation>getBook</con:operation><con:request name="getBook" id="aef80767-7d00-4ba2-a05e-5755c11a4690"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:getBookRequest>\r
+         <lib:token>sal</lib:token>\r
+         <lib:id>2</lib:id>\r
+      </lib:getBookRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="857a0ba9-a141-48df-aa57-1255077f3b0c" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="cdb1b0b4-47da-425a-8127-46fd9f55b935" name="Contains"><con:configuration><token>Kuritöö ja karistus</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/getBookRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="1c8f6a67-226d-4af9-9c10-95ac04b01e2c" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getBookList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="5a1c8e3c-b184-497f-91a7-087b78e3b1f7" name="getBookList"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>LibraryBinding</con:interface><con:operation>getBookList</con:operation><con:request name="getBookList" id="e9d4ef22-580a-425e-a174-a1b508eb9ffa"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:getBookListRequest>\r
+         <lib:token>sal</lib:token>\r
+      </lib:getBookListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="17fb65a9-2d58-4f76-956d-9567abb1397f" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="535e50db-adef-4faf-ad86-43363466fcc9" name="Contains"><con:configuration><token>Ussisonad</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/getBookListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="47b07726-ddd9-4e65-af0c-9b514ffb0424" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getLibrary TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="86f3298d-0e7f-4b5c-83ce-63f2c4b7e945" name="getLibrary"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>LibraryBinding</con:interface><con:operation>getLibrary</con:operation><con:request name="getLibrary" id="dc7b8efc-7eea-451d-ba65-bd3cc1e15a13"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:getLibraryRequest>\r
+         <lib:token>sal</lib:token>\r
+         <lib:libraryId>2</lib:libraryId>\r
+      </lib:getLibraryRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Schema Compliance" id="171baa92-e08d-405c-a1bc-ce2e3ee41c02" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:assertion type="Simple Contains" id="103a3d1a-ff01-4eb4-a72a-f5823413a7b7" name="Contains"><con:configuration><token>Mustamäe raamatukogu</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/getLibraryRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="cf12b85f-8719-47a7-929e-2bce1e2e001a" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getLibraryBooksList TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="57ed743d-90da-4c1c-b2e1-6ce94adf476d" name="getLibraryBooksList"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>LibraryBinding</con:interface><con:operation>getLibraryBooksList</con:operation><con:request name="getLibraryBooksList" id="df421602-e615-42bd-8257-473164d8ce56"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:getLibraryBooksListRequest>\r
+         <lib:token>sal</lib:token>\r
+         <lib:libraryId>2</lib:libraryId>\r
+      </lib:getLibraryBooksListRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Simple Contains" id="f87804c8-1941-497b-b826-f622757c39aa" name="Contains"><con:configuration><token>Mustamäe raamatukogu</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Schema Compliance" id="62f62c46-dda6-4138-bc12-83a2eaf3c87d" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/getLibraryBooksListRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:testCase id="3018944c-1f0d-41bc-8664-76df75dceaf3" failOnError="true" failTestCaseOnErrors="true" keepSession="false" maxResults="0" name="getListOfLibraries TestCase" searchProperties="true"><con:settings/><con:testStep type="request" id="408a83ee-8fda-4fb8-8315-fcaa4652041c" name="getListOfLibraries"><con:settings/><con:config xsi:type="con:RequestStep" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"><con:interface>LibraryBinding</con:interface><con:operation>getListOfLibraries</con:operation><con:request name="getListOfLibraries" id="f03e4957-2804-45be-9871-4acb7323ce12"><con:settings><con:setting id="com.eviware.soapui.impl.wsdl.WsdlRequest@request-headers">&lt;xml-fragment/></con:setting></con:settings><con:encoding>UTF-8</con:encoding><con:endpoint>http://friend-or-foe:8080/LibraryBooksWebApplication/LibraryService</con:endpoint><con:request><![CDATA[<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:lib="http://www.ttu.ee/idu0075/2015/ws/library">\r
+   <soapenv:Header/>\r
+   <soapenv:Body>\r
+      <lib:getListOfLibrariesRequest>\r
+         <lib:token>sal</lib:token>\r
+      </lib:getListOfLibrariesRequest>\r
+   </soapenv:Body>\r
+</soapenv:Envelope>]]></con:request><con:assertion type="Simple Contains" id="27f599e4-22d5-4a85-bc24-10f9c69c4091" name="Contains"><con:configuration><token>Mustamäe raamatukogu</token><ignoreCase>false</ignoreCase><useRegEx>false</useRegEx></con:configuration></con:assertion><con:assertion type="Schema Compliance" id="c198dc85-010a-404e-8560-5dc45d5d542c" name="Schema Compliance"><con:configuration><definition/></con:configuration></con:assertion><con:credentials><con:authType>No Authorization</con:authType></con:credentials><con:jmsConfig JMSDeliveryMode="PERSISTENT"/><con:jmsPropertyConfig/><con:wsaConfig action="http://www.ttu.ee/idu0075/2015/ws/library/LibraryPortType/getListOfLibrariesRequest" mustUnderstand="NONE" version="200508"/><con:wsrmConfig version="1.2"/></con:request></con:config></con:testStep><con:properties/></con:testCase><con:properties/></con:testSuite><con:properties/><con:wssContainer/><con:oAuth2ProfileContainer/></con:soapui-project>
